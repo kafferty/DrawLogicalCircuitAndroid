@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86_64"
+    api-level="22"
+    density="xxhdpi"
+    format="7"
+    timestamp="14641032733319" >
+
+    <task
+        name="javac"
+        duration="538" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="453" />
+    <task
+        name="verifier"
+        duration="64" />
+
+    <artifact
+        location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/outputs/apk/app-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="14641032733319" >
+        <artifact
+            location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/outputs/apk/app-debug.apk"
+            type="MAIN" />
+    </build>
+
+</instant-run>

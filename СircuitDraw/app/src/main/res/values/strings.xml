@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Draw Logical Circuit</string>
+    <string name="action_settings">Настройки</string>
+    <string name="menu_and">AND</string>
+    <string name="menu_or">OR</string>
+    <string name="menu_not">NOT</string>
+    <string name="menu_cancel">Отмена</string>
+    <string name="toast_text_error_connection">Пожалуйста, соедините инициализированные выходы слева направо</string>
+    <string name="action_bar_title">Logic Circuit Draw</string>
+    <string name="error_no_logic_type">Пожалуйста, соедините два инициализированных элемента</string>
+    <string name="error_element_connected_to_self">Логический элемент не может быть соединен с самим собой</string>
+    <string name="error_elements_left_to_right">Соединяем элементы слева направо</string>
+    <string name="error_inputs_full">Входы полностью заполнены</string>
+    <string name="action_evaluate_logic">Таблица истинности</string>
+    <string name="action_restart">Сброс</string>
+    <string name="error_no_valid_connections">Пожалуйста. образуйте хотя бы одно действующее соединение</string>
+
+</resources>

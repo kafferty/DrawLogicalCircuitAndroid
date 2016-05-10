@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="9c0aa8ef95966385ce80af29ba2a8dd7995ff333">
+        <dex dex="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_161b1a7559b6e3fb786b8b5f218ae666f8071c92/classes.dex" />
+    </item>
+    <item
+        jar="/Users/lidochka/Library/Android/sdk/extras/android/m2repository/com/android/support/support-v4/19.1.0/support-v4-19.1.0.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
+        <dex dex="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-v4-19.1.0_3b751ba918be045540bf0ef3f969567bd06ad750/classes.dex" />
+    </item>
+    <item
+        jar="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.2"
+        sha1="640afa685170ccda7742a3c9d15034e5498ea057">
+        <dex dex="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_80da32461cee723e44c9091deaa4eaa0d90b4aad/classes.dex" />
+    </item>
+
+</items>
