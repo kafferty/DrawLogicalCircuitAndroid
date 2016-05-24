@@ -11,7 +11,8 @@
 	android:gravity="center"
     android:layout_gravity="center"
     tools:context=".MainActivity"
-    android:id= "@+id/activity_main_relativelayout_top" >
+    android:id= "@+id/activity_main_relativelayout_top"
+	android:focusable="false">
 
     <GridLayout
         android:layout_width="wrap_content"
@@ -24,7 +25,24 @@
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:layout_centerInParent="true"
-        android:id= "@+id/activity_main_gridlayout" >
-    </GridLayout>
+        android:id= "@+id/activity_main_gridlayout" ></GridLayout>
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Экспорт"
+		android:id="@+id/export"
+		android:layout_alignTop="@+id/activity_main_gridlayout"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true" />
+
+	<Button
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="Таблица"
+		android:id="@+id/table"
+		android:layout_below="@+id/export"
+		android:layout_alignParentRight="true"
+		android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

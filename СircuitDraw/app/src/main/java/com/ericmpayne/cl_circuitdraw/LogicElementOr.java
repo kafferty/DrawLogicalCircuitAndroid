@@ -39,7 +39,7 @@ public class LogicElementOr extends LogicElement {
 				offset = new double[] {0, 0.3};
 				break;
 			case RIGHT_CENTRE:
-				offset = new double[] {0.5, 0.2};
+				offset = new double[] {0.5, 0.1};
 				break;
 			case NONE:
 				offset = new double[] {0, 0};

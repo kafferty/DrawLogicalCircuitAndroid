@@ -139,7 +139,7 @@ public class LogicElementCreationAdapter {
 		touchCoordinates[1] = (int) event.getRawY() - LOGIC_ELEMENT_HEIGHT;
 		
 		LogicElement connectingElement;
-		int[] connectingCoordinates; //Инициализируем, когда знаем, с каким элементов соединяем.
+		int[] connectingCoordinates; //Инициализируем, когда знаем, с каким элементоv соединяем.
 		int[][] leftWireExtensionPoints = null;
 		int[][] rightWireExtensionPoints = null;
 		
@@ -199,14 +199,13 @@ public class LogicElementCreationAdapter {
 								elementConnectionSuccess = false;
 								break;
 							}
-							
 							if (!connectingElement.hasLogicType())
 							{
 								Toast.makeText(activity, R.string.error_no_logic_type, Toast.LENGTH_SHORT).show();
 								elementConnectionSuccess = false;
 								break;
 							}
-							
+
 							if (viewCoordinates[0] >= connectingCoordinates[0])
 							{
 								Toast.makeText(activity, R.string.error_elements_left_to_right, Toast.LENGTH_SHORT).show();

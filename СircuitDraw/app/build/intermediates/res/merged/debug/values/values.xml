@@ -2,16 +2,17 @@
 <resources>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <string name="action_about">О программе</string>
     <string name="action_bar_title">Logic Circuit Draw</string>
-    <string name="action_evaluate_logic">Оценить логику</string>
-    <string name="action_restart">Перезапуск</string>
+    <string name="action_evaluate_logic">Таблица истинности</string>
+    <string name="action_restart">Сброс</string>
     <string name="action_settings">Настройки</string>
-    <string name="app_name">CircuitDraw</string>
+    <string name="app_name">Draw Logical Circuit</string>
     <string name="error_element_connected_to_self">Логический элемент не может быть соединен с самим собой</string>
     <string name="error_elements_left_to_right">Соединяем элементы слева направо</string>
     <string name="error_inputs_full">Входы полностью заполнены</string>
     <string name="error_no_logic_type">Пожалуйста, соедините два инициализированных элемента</string>
-    <string name="error_no_valid_connections">Пожалуйста. образуйте хотя бы одно действующее соединение</string>
+    <string name="error_no_valid_connections">Пожалуйста, образуйте хотя бы одно действующее соединение</string>
     <string name="menu_and">AND</string>
     <string name="menu_cancel">Отмена</string>
     <string name="menu_not">NOT</string>

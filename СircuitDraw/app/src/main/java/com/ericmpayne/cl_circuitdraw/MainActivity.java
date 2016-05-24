@@ -1,5 +1,8 @@
 package com.ericmpayne.cl_circuitdraw;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Point;
@@ -9,13 +12,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
+import android.os.Environment;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
 
 public class MainActivity extends Activity {
-	
-	private static int NUM_ROWS = 4;
-	private static int NUM_COLUMNS = 7;
+
+	Button btnExport;
+	Button btnSave;
+	Button btnTable;
+
+	private RelativeLayout L1;
+
+	private TruthTableData tt;
+	private TruthTableAdapter ttAdapter;
+	private int NUM_ROWS = 4;
+	private int NUM_COLUMNS = 7;
+	private int countForExport = 0;
 
 	// Инициализируем в  initializeParametersFromScreenSize()
 	public static int LOGIC_ELEMENT_HEIGHT;
@@ -38,6 +57,7 @@ public class MainActivity extends Activity {
 	private GridLayout mainGrid;
 	private DrawingOverlayView wireOverlay;
 	private LogicEvaluationAdapter logicEvaluator;
+
 	
 	private LogicElementInput[] inputElements;
 	private LogicElementOutput[] outputElements;
@@ -47,6 +67,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		main();
+		L1 = (RelativeLayout) findViewById(R.id.activity_main_relativelayout_top);
 	}
 
 	@Override
@@ -57,22 +78,16 @@ public class MainActivity extends Activity {
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-		
-		TruthTableData tt;
-		TruthTableAdapter ttAdapter;
-		
-	    switch (item.getItemId()) {
-	    case R.id.action_evaluate_logic:
-	    	tt = logicEvaluator.evaluateLogic();
-	    	if (null != tt)
-	    	{
-	    		ttAdapter = new TruthTableAdapter(this,tt,LOGIC_ELEMENT_WIDTH,NUM_ROWS);
-		    	ttAdapter.showTable();
-	    	}
-	        return true;
-	    case R.id.action_restart:
+
+
+		switch (item.getItemId()) {
+			case R.id.action_restart:
 	    	this.recreate();
 	    	return true;
+			case R.id.action_about:
+				Intent intent = new Intent(MainActivity.this, About.class);
+				startActivity(intent);
+
 	    default:
 	        return super.onOptionsItemSelected(item);
 	    }
@@ -86,8 +101,61 @@ public class MainActivity extends Activity {
 		initializeLogicElementCreationAdapter();
 		initializeButtons();
 		initializeLogicEvaluationAdapter();
+		initializeBtn();
 	}
-	
+	private void initializeBtn() {
+
+
+		btnExport = (Button) findViewById(R.id.export);
+		btnTable = (Button) findViewById(R.id.table);
+
+
+		final MainActivity mA = this;
+		btnTable.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				tt = logicEvaluator.evaluateLogic();
+				if (null != tt)
+				{
+					ttAdapter = new TruthTableAdapter(mA,tt,LOGIC_ELEMENT_WIDTH,NUM_ROWS);
+					ttAdapter.showTable();
+				}
+			}
+		});
+
+		btnExport.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Export();
+		}
+
+	});
+
+	}
+
+	private void Export() {
+		countForExport++;
+		View v1 = L1.getRootView();
+		v1.setDrawingCacheEnabled(true);
+		Bitmap bm = v1.getDrawingCache();
+		String filename = "circuit" + countForExport + ".png";
+		File sd = Environment.getExternalStorageDirectory();
+		File dest = new File(sd, filename);
+
+		try {
+			FileOutputStream out = new FileOutputStream(dest);
+			bm.compress(Bitmap.CompressFormat.PNG, 100, out);
+			out.flush();
+			out.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		Toast.makeText(this, "Скрин схемы сохранен на SD карту", Toast.LENGTH_SHORT).show();
+	}
+
+
 	private void initializeLogicEvaluationAdapter()
 	{
 		logicEvaluator = new LogicEvaluationAdapter(this, inputElements, outputElements, NUM_ROWS);
@@ -126,11 +194,11 @@ public class MainActivity extends Activity {
 	{
 		elementCreator = new LogicElementCreationAdapter(this,wireOverlay,mainGrid,LOGIC_ELEMENT_WIDTH,LOGIC_ELEMENT_HEIGHT,LOGIC_ELEMENT_MARGIN_SIZE);
 	}
-	
+
 	private void initializeLayouts()
 	{
 		topLayout = (RelativeLayout) findViewById(R.id.activity_main_relativelayout_top);
-		
+
 		mainGrid = (GridLayout) findViewById(R.id.activity_main_gridlayout);
 		mainGrid.setColumnCount(NUM_COLUMNS);
 	}
@@ -139,7 +207,8 @@ public class MainActivity extends Activity {
 	{
 		// Добавляем входные элементы, исходные и выходные элементы.
 		// Добавляем onTouch listeners для каждого из этих элементов
-		
+
+
 		LogicElement b = null;
 		GridLayout.LayoutParams p = null;
 		
@@ -187,5 +256,6 @@ public class MainActivity extends Activity {
 		wireOverlay = new DrawingOverlayView(this);
 		topLayout.addView(wireOverlay);
 	}
-	
+
 }
+

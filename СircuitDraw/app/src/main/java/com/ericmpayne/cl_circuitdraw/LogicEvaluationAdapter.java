@@ -21,8 +21,7 @@ public class LogicEvaluationAdapter {
 	
 	public TruthTableData evaluateLogic()
 	{
-		// Для создания таблицы истинности, создаем boolean массив. (2^n, где n - кол-во входов X)
-
+		// Для создания таблицы истинности создаем boolean массив. (2^n, где n - кол-во входов X)
 		boolean[][] truthTableInputs;
 		boolean[][] truthTableOutputs;
 		
@@ -50,6 +49,7 @@ public class LogicEvaluationAdapter {
 		if (0 == numInputsInUse || 0 == numOutputsInUse)
 		{
 			Toast.makeText(activity, R.string.error_no_valid_connections, Toast.LENGTH_SHORT).show();
+			return null;
 		}
 		
 		inputsInUse = new LogicElementInput[numInputsInUse];
@@ -76,7 +76,7 @@ public class LogicEvaluationAdapter {
 			}
 		}
 
-		// Теперь, когда мы знаем, количество входов , создать 2D массив всех возможных дискретный вход (2 ^ numInputsInUse ) .
+		// Когда мы знаем количество входов, создать 2D массив всех возможных дискретных входов (2 ^ numInputsInUse ) .
 		// Для каждого из 2 ^ N входов :
 		// Установить входы логических элементов.
 		// Получить значение выходного сигнала для каждого выходного элемента для этой заданной комбинации входного сигнала.
@@ -96,7 +96,6 @@ public class LogicEvaluationAdapter {
 				truthTableOutputs[i][j] = outputsInUse[j].getLogicValue();
 			}
 		}
-		
 		return new TruthTableData(numInputsInUse, numOutputsInUse, numTruthTableRows, truthTableInputs, truthTableOutputs, inputAtIndexIsInUse, outputAtIndexIsInUse);
 	}
 	

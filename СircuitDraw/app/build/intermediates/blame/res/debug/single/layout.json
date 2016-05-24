@@ -8,6 +8,10 @@
         "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/layout/activity_main.xml"
     },
     {
+        "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/layout/about.xml",
+        "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/layout/about.xml"
+    },
+    {
         "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/layout/logic_element_select.xml",
         "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/layout/logic_element_select.xml"
     }

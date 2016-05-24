@@ -29,44 +29,54 @@ public final class R {
         public static final int icon_y1=0x7f02000b;
         public static final int icon_y2=0x7f02000c;
         public static final int icon_y3=0x7f02000d;
-        public static final int logic_element_drawable=0x7f02000e;
-        public static final int main_background_drawable=0x7f02000f;
-        public static final int truth_table_element_border_drawable_right=0x7f020010;
+        public static final int launch=0x7f02000e;
+        public static final int logic_element_drawable=0x7f02000f;
+        public static final int main_background_drawable=0x7f020010;
+        public static final int truth_table_element_border_drawable_right=0x7f020011;
     }
     public static final class id {
-        public static final int action_evaluate_logic=0x7f080006;
-        public static final int action_restart=0x7f080007;
-        public static final int activity_main_gridlayout=0x7f080001;
-        public static final int activity_main_relativelayout_top=0x7f080000;
-        public static final int menu_button_and=0x7f080003;
-        public static final int menu_button_cancel=0x7f080005;
-        public static final int menu_button_not=0x7f080002;
-        public static final int menu_button_or=0x7f080004;
+        public static final int action_about=0x7f08000e;
+        public static final int action_restart=0x7f08000d;
+        public static final int activity_main_gridlayout=0x7f080006;
+        public static final int activity_main_relativelayout_top=0x7f080005;
+        public static final int export=0x7f080007;
+        public static final int gestureOverlayView=0x7f080004;
+        public static final int menu_button_and=0x7f08000a;
+        public static final int menu_button_cancel=0x7f08000c;
+        public static final int menu_button_not=0x7f080009;
+        public static final int menu_button_or=0x7f08000b;
+        public static final int table=0x7f080008;
+        public static final int textView=0x7f080000;
+        public static final int textView2=0x7f080001;
+        public static final int textView3=0x7f080003;
+        public static final int textView4=0x7f080002;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int logic_element_select=0x7f030001;
-        public static final int truth_table=0x7f030002;
+        public static final int about=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int logic_element_select=0x7f030002;
+        public static final int truth_table=0x7f030003;
     }
     public static final class menu {
         public static final int main=0x7f070000;
     }
     public static final class string {
-        public static final int action_bar_title=0x7f060000;
-        public static final int action_evaluate_logic=0x7f060001;
-        public static final int action_restart=0x7f060002;
-        public static final int action_settings=0x7f060003;
-        public static final int app_name=0x7f060004;
-        public static final int error_element_connected_to_self=0x7f060005;
-        public static final int error_elements_left_to_right=0x7f060006;
-        public static final int error_inputs_full=0x7f060007;
-        public static final int error_no_logic_type=0x7f060008;
-        public static final int error_no_valid_connections=0x7f060009;
-        public static final int menu_and=0x7f06000a;
-        public static final int menu_cancel=0x7f06000b;
-        public static final int menu_not=0x7f06000c;
-        public static final int menu_or=0x7f06000d;
-        public static final int toast_text_error_connection=0x7f06000e;
+        public static final int action_about=0x7f060000;
+        public static final int action_bar_title=0x7f060001;
+        public static final int action_evaluate_logic=0x7f060002;
+        public static final int action_restart=0x7f060003;
+        public static final int action_settings=0x7f060004;
+        public static final int app_name=0x7f060005;
+        public static final int error_element_connected_to_self=0x7f060006;
+        public static final int error_elements_left_to_right=0x7f060007;
+        public static final int error_inputs_full=0x7f060008;
+        public static final int error_no_logic_type=0x7f060009;
+        public static final int error_no_valid_connections=0x7f06000a;
+        public static final int menu_and=0x7f06000b;
+        public static final int menu_cancel=0x7f06000c;
+        public static final int menu_not=0x7f06000d;
+        public static final int menu_or=0x7f06000e;
+        public static final int toast_text_error_connection=0x7f06000f;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 

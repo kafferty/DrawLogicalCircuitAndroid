@@ -15,6 +15,7 @@
     <string name="error_inputs_full">Входы полностью заполнены</string>
     <string name="action_evaluate_logic">Таблица истинности</string>
     <string name="action_restart">Сброс</string>
-    <string name="error_no_valid_connections">Пожалуйста. образуйте хотя бы одно действующее соединение</string>
+    <string name="action_about">О программе</string>
+    <string name="error_no_valid_connections">Пожалуйста, образуйте хотя бы одно действующее соединение</string>
 
 </resources>

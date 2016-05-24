@@ -44,7 +44,7 @@ public abstract class LogicElement extends ImageButton {
 	private GateLocation determineLocationOfWire(LogicElement input, Quadrant quadrantTouched)
 	{
 
-	//Используем QuadrantToucned для того, чтобы понять, где нужно нарисовать провод.
+		//Используем QuadrantToucned для того, чтобы понять, где нужно нарисовать провод.
 		// Если пользователь прикоснулся к верхнему левому квадрату, то используем входной порт 0 и рисуем провод в
 		//Левом верхнем углу. Если уже используется, то используем другой.
 		GateLocation locationToReturn = GateLocation.NONE;
