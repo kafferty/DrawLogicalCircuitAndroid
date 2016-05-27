@@ -26,7 +26,7 @@ public class LogicElementAnd extends LogicElement {
 	@Override
 	public double[] getOffsetForGateLocation(GateLocation locationForWire) {
 		//Для данного местоположения входа, определяем смещение от верхнего левого угла
-		//Логичесеого элемента, чтобы понять, где мы должны нарисовать окончание провода.
+		//Логического элемента, чтобы понять, где мы должны нарисовать окончание провода.
 		//Константы тут выведены эксперименатально (зависят от соответствующего .png)
 		
 		double[] offset;
@@ -54,5 +54,8 @@ public class LogicElementAnd extends LogicElement {
 		
 		return offset;
 	}
-
+	@Override
+	public String getElementName() {
+		return "And";
+	}
 }

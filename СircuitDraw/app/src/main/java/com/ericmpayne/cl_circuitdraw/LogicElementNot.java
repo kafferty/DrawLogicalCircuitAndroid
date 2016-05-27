@@ -49,5 +49,9 @@ public class LogicElementNot extends LogicElement {
 		
 		return offset;
 	}
+	@Override
+	public String getElementName() {
+		return "Not";
+	}
 
 }

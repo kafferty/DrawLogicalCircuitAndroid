@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <string name="action_about">О программе</string>
-    <string name="action_bar_title">Logic Circuit Draw</string>
+    <string name="action_bar_title">Draw Logical Circuit</string>
     <string name="action_evaluate_logic">Таблица истинности</string>
     <string name="action_restart">Сброс</string>
     <string name="action_settings">Настройки</string>

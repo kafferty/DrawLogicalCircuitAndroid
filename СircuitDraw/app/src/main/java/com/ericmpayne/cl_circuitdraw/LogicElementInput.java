@@ -12,7 +12,6 @@ public class LogicElementInput extends LogicElement {
 		super(context, attrs, defStyle);
 		inputElements = null;
 		this.setImageResource(imageId);
-		
 		logicValue = false;
 	}
 
@@ -43,7 +42,11 @@ public class LogicElementInput extends LogicElement {
 	public double[] getOffsetForGateLocation(GateLocation locationForWire) {
 		return new double[]{0,0};
 	}
-	
-	
+
+	@Override
+	public String getElementName() {
+		return null;
+	}
+
 
 }

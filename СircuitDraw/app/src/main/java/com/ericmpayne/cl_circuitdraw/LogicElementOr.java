@@ -51,5 +51,9 @@ public class LogicElementOr extends LogicElement {
 		
 		return offset;
 	}
+	@Override
+	public String getElementName() {
+		return "Or";
+	}
 
 }

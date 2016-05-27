@@ -25,4 +25,9 @@ public class LogicElementBlank extends LogicElement {
 		return new double[]{0,0};
 	}
 
+	@Override
+	public String getElementName() {
+		return null;
+	}
+
 }

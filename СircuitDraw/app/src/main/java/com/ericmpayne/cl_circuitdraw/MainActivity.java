@@ -1,11 +1,12 @@
 package com.ericmpayne.cl_circuitdraw;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Point;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.Menu;
@@ -18,8 +19,15 @@ import android.widget.RelativeLayout;
 import android.os.Environment;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 
 public class MainActivity extends Activity {
@@ -27,6 +35,7 @@ public class MainActivity extends Activity {
 	Button btnExport;
 	Button btnSave;
 	Button btnTable;
+	Button btnLoad;
 
 	private RelativeLayout L1;
 
@@ -35,6 +44,7 @@ public class MainActivity extends Activity {
 	private int NUM_ROWS = 4;
 	private int NUM_COLUMNS = 7;
 	private int countForExport = 0;
+	final String LOG_TAG = "myLogs";
 
 	// Инициализируем в  initializeParametersFromScreenSize()
 	public static int LOGIC_ELEMENT_HEIGHT;
@@ -78,8 +88,6 @@ public class MainActivity extends Activity {
 	}
 	
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-
 		switch (item.getItemId()) {
 			case R.id.action_restart:
 	    	this.recreate();
@@ -103,14 +111,42 @@ public class MainActivity extends Activity {
 		initializeLogicEvaluationAdapter();
 		initializeBtn();
 	}
+
 	private void initializeBtn() {
-
-
 		btnExport = (Button) findViewById(R.id.export);
 		btnTable = (Button) findViewById(R.id.table);
+		btnSave = (Button) findViewById(R.id.save);
+		btnLoad = (Button) findViewById(R.id.load);
 
 
 		final MainActivity mA = this;
+
+		btnSave.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Save();
+			}
+		});
+
+		btnLoad.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					String filename = "myCircuit.txt";
+					BufferedReader br = new BufferedReader(new InputStreamReader(
+							openFileInput(filename)));
+					String str = "";
+					while ((str = br.readLine()) != null) {
+						Log.d(LOG_TAG, str);
+					}
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
 		btnTable.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -155,6 +191,31 @@ public class MainActivity extends Activity {
 		Toast.makeText(this, "Скрин схемы сохранен на SD карту", Toast.LENGTH_SHORT).show();
 	}
 
+	private void Save() {
+		String filename = "myCircuit.txt";
+		countForExport++;
+
+
+		try {
+			// отрываем поток для записи
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+					openFileOutput(filename, MODE_PRIVATE)));
+			// пишем данные
+			for (int i = 0; i < elementCreator.getAllLogicElement().size(); i++) {
+				bw.write(elementCreator.getAllLogicElement().get(i).getElementName());
+				bw.write(" " + (int) elementCreator.getAllLogicElement().get(i).getX());
+				bw.write(" " + (int) elementCreator.getAllLogicElement().get(i).getY());
+				bw.write("\n");
+			}
+			// закрываем поток
+			bw.close();
+			Log.d(LOG_TAG, "Файл записан");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void initializeLogicEvaluationAdapter()
 	{
@@ -256,6 +317,5 @@ public class MainActivity extends Activity {
 		wireOverlay = new DrawingOverlayView(this);
 		topLayout.addView(wireOverlay);
 	}
-
 }
 

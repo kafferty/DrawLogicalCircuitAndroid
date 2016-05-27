@@ -13,6 +13,7 @@ public abstract class LogicElement extends ImageButton {
 	public abstract boolean getLogicValue();
 	public abstract boolean hasLogicType();
 	public abstract double[] getOffsetForGateLocation(GateLocation locationForWire);
+	public abstract String getElementName();
 
 	public LogicElement(Context context, AttributeSet attrs, int defStyle)
 	{

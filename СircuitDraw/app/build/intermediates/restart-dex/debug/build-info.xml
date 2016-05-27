@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="armeabi-v7a,armeabi"
-    api-level="16"
-    density="hdpi"
+    abi="x86_64,x86"
+    api-level="22"
+    density="xxhdpi"
     format="7"
-    timestamp="5914277688330" >
+    timestamp="78219068597459" >
 
     <task
         name="javac"
@@ -14,19 +14,29 @@
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="39" />
+        duration="68" />
     <task
         name="verifier"
-        duration="3" />
+        duration="4" />
 
     <artifact
-        location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/outputs/apk/app-debug.apk"
-        type="MAIN" />
+        location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
+        type="DEX" />
 
-    <build timestamp="5914277688330" >
+    <build timestamp="76767819747051" >
         <artifact
             location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/outputs/apk/app-debug.apk"
             type="MAIN" />
+    </build>
+    <build timestamp="77176078317362" >
+        <artifact
+            location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/resources-debug.ap_"
+            type="RESOURCES" />
+    </build>
+    <build timestamp="78219068597459" >
+        <artifact
+            location="/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex"
+            type="DEX" />
     </build>
 
 </instant-run>

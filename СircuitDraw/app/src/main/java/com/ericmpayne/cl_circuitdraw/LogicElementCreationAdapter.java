@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LogicElementCreationAdapter {
 	
 	// Замена пустых элементов логическими элементами
@@ -31,6 +34,7 @@ public class LogicElementCreationAdapter {
 	private AlertDialog alertDialog;
 	private DrawingOverlayView wireOverlay;
 	private GridLayout mainGrid;
+	private List<LogicElement> allLogicElement;
 	
 	private int touchEventPointerId;//Используется для предотвращения любого рода рисования
 	private int[] initialLineDrawStartCoordinates; // Координаты того, где мы начинаем рисовать. Используется тогда, когда предыдущий провод был нарисован
@@ -42,8 +46,8 @@ public class LogicElementCreationAdapter {
 		this.LOGIC_ELEMENT_WIDTH = LOGIC_ELEMENT_WIDTH;
 		this.LOGIC_ELEMENT_HEIGHT = LOGIC_ELEMENT_HEIGHT;
 		this.LOGIC_ELEMENT_MARGIN_SIZE = LOGIC_ELEMENT_MARGIN_SIZE;
-		
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		allLogicElement = new ArrayList<LogicElement>();
 	}
 	
 	public LogicElement createElement(LogicElement elementToUpdate)
@@ -116,6 +120,7 @@ public class LogicElementCreationAdapter {
 				}});
 			parent.addView(newElement, parent.indexOfChild(elementToUpdate));
 			parent.removeView(elementToUpdate);
+			allLogicElement.add(newElement);
 		}
 			
 		alertDialog.dismiss();
@@ -139,7 +144,7 @@ public class LogicElementCreationAdapter {
 		touchCoordinates[1] = (int) event.getRawY() - LOGIC_ELEMENT_HEIGHT;
 		
 		LogicElement connectingElement;
-		int[] connectingCoordinates; //Инициализируем, когда знаем, с каким элементоv соединяем.
+		int[] connectingCoordinates; //Инициализируем, когда знаем, с каким элементом соединяем.
 		int[][] leftWireExtensionPoints = null;
 		int[][] rightWireExtensionPoints = null;
 		
@@ -331,5 +336,7 @@ public class LogicElementCreationAdapter {
 		coordinates[1] += offset[1]*LOGIC_ELEMENT_HEIGHT;
 		return coordinates;
 	}
+
+	 public List<LogicElement> getAllLogicElement() {return allLogicElement;}
 	
 }

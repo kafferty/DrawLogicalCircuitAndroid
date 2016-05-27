@@ -35,16 +35,18 @@ public final class R {
         public static final int truth_table_element_border_drawable_right=0x7f020011;
     }
     public static final class id {
-        public static final int action_about=0x7f08000e;
-        public static final int action_restart=0x7f08000d;
+        public static final int action_about=0x7f080010;
+        public static final int action_restart=0x7f08000f;
         public static final int activity_main_gridlayout=0x7f080006;
         public static final int activity_main_relativelayout_top=0x7f080005;
         public static final int export=0x7f080007;
         public static final int gestureOverlayView=0x7f080004;
-        public static final int menu_button_and=0x7f08000a;
-        public static final int menu_button_cancel=0x7f08000c;
-        public static final int menu_button_not=0x7f080009;
-        public static final int menu_button_or=0x7f08000b;
+        public static final int load=0x7f08000a;
+        public static final int menu_button_and=0x7f08000c;
+        public static final int menu_button_cancel=0x7f08000e;
+        public static final int menu_button_not=0x7f08000b;
+        public static final int menu_button_or=0x7f08000d;
+        public static final int save=0x7f080009;
         public static final int table=0x7f080008;
         public static final int textView=0x7f080000;
         public static final int textView2=0x7f080001;
