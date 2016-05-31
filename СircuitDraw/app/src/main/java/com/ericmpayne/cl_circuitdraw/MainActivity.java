@@ -208,6 +208,10 @@ public class MainActivity extends Activity {
 				bw.write("\n");
 			}
 			// закрываем поток
+			for (int i = 0; i < elementCreator.wireCoordinates.size(); i++) {
+				for (int k = 0; i < elementCreator.wireCoordinates.get(i).size())
+				bw.write(elementCreator.wireCoordinates.get(i).get(1));
+			}
 			bw.close();
 			Log.d(LOG_TAG, "Файл записан");
 		} catch (FileNotFoundException e) {
@@ -318,4 +322,3 @@ public class MainActivity extends Activity {
 		topLayout.addView(wireOverlay);
 	}
 }
-

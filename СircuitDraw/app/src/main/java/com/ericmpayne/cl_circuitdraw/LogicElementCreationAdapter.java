@@ -35,7 +35,8 @@ public class LogicElementCreationAdapter {
 	private DrawingOverlayView wireOverlay;
 	private GridLayout mainGrid;
 	private List<LogicElement> allLogicElement;
-	
+
+	List<List<int[][]>> wireCoordinates = new ArrayList<List<int[][]>>();
 	private int touchEventPointerId;//Используется для предотвращения любого рода рисования
 	private int[] initialLineDrawStartCoordinates; // Координаты того, где мы начинаем рисовать. Используется тогда, когда предыдущий провод был нарисован
 	public LogicElementCreationAdapter(Activity activity, DrawingOverlayView wireOverlay, GridLayout mainGrid, int LOGIC_ELEMENT_WIDTH, int LOGIC_ELEMENT_HEIGHT, int LOGIC_ELEMENT_MARGIN_SIZE)
@@ -235,7 +236,7 @@ public class LogicElementCreationAdapter {
 							elementConnectionSuccess = true;
 							
 						} while (false);
-						
+						int[][] point = new int[2][];
 						if (!(elementToUpdate instanceof LogicElementInput || elementToUpdate instanceof LogicElementOutput))
 						{
 							leftWireExtensionPoints = new int[2][];
@@ -249,7 +250,10 @@ public class LogicElementCreationAdapter {
 							rightWireExtensionPoints[0] = touchCoordinates;
 							rightWireExtensionPoints[1] = getWireEndCoordinatesFromGateLocation(connectingElement, locationForWire);
 						}
-						
+						List<int[][]> list = new ArrayList<int[][]>();
+						list.add(leftWireExtensionPoints);
+						list.add(rightWireExtensionPoints);
+						wireCoordinates.add(list);
 						wireOverlay.endPathAndDrawAt(elementConnectionSuccess, leftWireExtensionPoints, rightWireExtensionPoints);
 						touchEventPointerId = INVALID_TOUCH_POINTER_ID;
 					}
