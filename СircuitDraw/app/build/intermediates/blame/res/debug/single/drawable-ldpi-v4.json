@@ -4,12 +4,12 @@
         "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/drawable-ldpi/icon_y1.png"
     },
     {
-        "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_or.png",
-        "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/drawable-ldpi/icon_or.png"
-    },
-    {
         "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_and.png",
         "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/drawable-ldpi/icon_and.png"
+    },
+    {
+        "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_or.png",
+        "source": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/src/main/res/drawable-ldpi/icon_or.png"
     },
     {
         "merged": "/Users/lidochka/AndroidStudioProjects/СircuitDraw/app/build/intermediates/res/merged/debug/drawable-ldpi-v4/icon_y2.png",
