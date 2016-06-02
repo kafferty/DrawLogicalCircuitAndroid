@@ -127,43 +127,7 @@ public class MainActivity extends Activity {
 		btnLoad.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				try {
-					String filename = "myCircuit.txt";
-					BufferedReader br = new BufferedReader(new InputStreamReader(
-							openFileInput(filename)));
-					String str = "";
-					while ((str = br.readLine()) != null) {
-						Log.d(LOG_TAG, str);
-					}
-					if (elementCreator.realWireCoordinates.size() != 0) {
-						for (int i = 1; i < elementCreator.realWireCoordinates.size(); i++) {
-							wireOverlay.startNewPathAt(elementCreator.realWireCoordinates.get(i).get(0)[0], elementCreator.realWireCoordinates.get(i).get(0)[1]);
-							wireOverlay.continuePathAlong(elementCreator.realWireCoordinates.get(i).get(1)[0], elementCreator.realWireCoordinates.get(i).get(1)[1] - elementCreator.LOGIC_ELEMENT_HEIGHT);
-						}
-					}
-
-					/*for (int i = 0; i < elementCreator.getAllLogicElement().size(); i++) {
-						int [] coordinates = new int[2];
-						coordinates[0] = (int) elementCreator.getAllLogicElement().get(i).getX();
-						coordinates[1] = (int) elementCreator.getAllLogicElement().get(i).getY();
-						LogicElement elementToUpdate;
-						ViewGroup parent = (ViewGroup) elementToUpdate.getParent();
-						LogicElement newElement;
-						newElement.setCoordinates(coordinates);
-						switch(elementCreator.getAllLogicElement().get(i).getElementName().charAt(0)) {
-							case 'A':
-								newElement = new LogicElementAnd(elementToUpdate.getContext(),null,R.style.style_logic_element);
-							case 'N':
-								newElement = new LogicElementNot(elementToUpdate.getContext(),null,R.style.style_logic_element);
-							case 'O':
-								newElement = new LogicElementOr(elementToUpdate.getContext(),null,R.style.style_logic_element);
-						}
-					} */
-					} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+				Load();
 			}
 		});
 
@@ -190,6 +154,8 @@ public class MainActivity extends Activity {
 
 	}
 
+
+
 	private void Export() {
 		countForExport++;
 		View v1 = L1.getRootView();
@@ -207,19 +173,18 @@ public class MainActivity extends Activity {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		Toast.makeText(this, "Скрин схемы сохранен на SD карту", Toast.LENGTH_SHORT).show();
 	}
 
 	private void Save() {
-		String filename = "myCircuit.txt";
+		String filename = "myCircuit";
 		countForExport++;
 
 
 		try {
 			// отрываем поток для записи
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-					openFileOutput(filename, MODE_PRIVATE)));
+					openFileOutput(filename + countForExport + "txt", MODE_PRIVATE)));
 			// пишем данные
 			for (int i = 0; i < elementCreator.getAllLogicElement().size(); i++) {
 				bw.write(elementCreator.getAllLogicElement().get(i).getElementName());
@@ -230,17 +195,17 @@ public class MainActivity extends Activity {
 
 			if (elementCreator.realWireCoordinates.size() != 0) {
 				for (int i = 0; i < elementCreator.realWireCoordinates.size(); i++) {
-					bw.write("WIRE number " + i+1 + " ");
-					bw.write("Xbegin = " + elementCreator.realWireCoordinates.get(i).get(0)[0] + " ");
-					bw.write("Ybegin = " + elementCreator.realWireCoordinates.get(i).get(0)[1] + " ");
-					bw.write("Xend = " + elementCreator.realWireCoordinates.get(i).get(1)[0] + " ");
-					bw.write("Yend = " + elementCreator.realWireCoordinates.get(i).get(1)[1] + " ");
+					bw.write("WIRE number " + (i+1) + " ");
+					bw.write(elementCreator.realWireCoordinates.get(i).get(0)[0] + " ");//Xbegin
+					bw.write(elementCreator.realWireCoordinates.get(i).get(1)[0] + " ");//Xend
+					bw.write(elementCreator.realWireCoordinates.get(i).get(0)[1] + " ");//Ybegin
+					bw.write(elementCreator.realWireCoordinates.get(i).get(1)[1] + " ");//Yend
 					bw.write("\n");
 				}
 			}
 			if (elementCreator.wireCoordinates.size() !=0) {
 				for (int i = 0; i < elementCreator.wireCoordinates.size(); i++) {
-					bw.write("Для " + i+1 + " провода");
+					bw.write("Для " + (i+1) + " провода");
 					if(elementCreator.wireCoordinates.get(i).get(2)[0][0] == 1) {
 						if (elementCreator.wireCoordinates.get(i).get(0) != null) {
 							bw.write(" " + elementCreator.wireCoordinates.get(i).get(0)[0][0]);
@@ -262,6 +227,32 @@ public class MainActivity extends Activity {
 			//закрываем поток
 			bw.close();
 			Log.d(LOG_TAG, "Файл записан");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void Load() {
+		try {
+			String filename = "myCircuit.txt";
+			BufferedReader br = new BufferedReader(new InputStreamReader(
+					openFileInput(filename)));
+			String str = "";
+			while ((str = br.readLine()) != null) {
+				Log.d(LOG_TAG, str);//Считывание из файла в логи для проверки правильности координат
+
+				//Проверка отрисовки проводов. Сейчас рисуется лишь последний нарисованный провод.
+				if (elementCreator.realWireCoordinates.size() != 0) {
+					for (int i = 0; i < elementCreator.realWireCoordinates.size(); i++) {
+						wireOverlay.startNewPathAt(elementCreator.realWireCoordinates.get(i).get(0)[0], elementCreator.realWireCoordinates.get(i).get(0)[1]);
+						wireOverlay.continuePathAlong(elementCreator.realWireCoordinates.get(i).get(1)[0], elementCreator.realWireCoordinates.get(i).get(1)[1] - elementCreator.LOGIC_ELEMENT_HEIGHT);
+					}
+				}
+			}
+
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
