@@ -193,6 +193,7 @@ public class MainActivity extends Activity {
 				bw.write("\n");
 			}
 
+			//Сохранение координат тех проводов, которые пользователь нарисовал сам
 			if (elementCreator.realWireCoordinates.size() != 0) {
 				for (int i = 0; i < elementCreator.realWireCoordinates.size(); i++) {
 					bw.write("WIRE number " + (i+1) + " ");
@@ -203,6 +204,8 @@ public class MainActivity extends Activity {
 					bw.write("\n");
 				}
 			}
+
+			//Сохранение координат дорисованных проводов
 			if (elementCreator.wireCoordinates.size() !=0) {
 				for (int i = 0; i < elementCreator.wireCoordinates.size(); i++) {
 					bw.write("Для " + (i+1) + " провода");
