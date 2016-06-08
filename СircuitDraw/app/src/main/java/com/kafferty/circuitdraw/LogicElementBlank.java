@@ -30,4 +30,6 @@ public class LogicElementBlank extends LogicElement {
 		return null;
 	}
 
+	public int getTypeId() { return 100000;}
+
 }

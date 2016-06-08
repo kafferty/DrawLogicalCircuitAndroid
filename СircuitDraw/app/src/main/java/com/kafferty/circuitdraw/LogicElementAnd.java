@@ -13,8 +13,8 @@ public class LogicElementAnd extends LogicElement {
 
 	@Override
 	public boolean getLogicValue() {
-		boolean v0 = (null == inputElements[0] ? false : inputElements[0].getLogicValue());
-		boolean v1 = (null == inputElements[1] ? false : inputElements[1].getLogicValue());
+		boolean v0 = (inputElements[0] == null ? false : inputElements[0].getLogicValue());
+		boolean v1 = (inputElements[1] == null ? false : inputElements[1].getLogicValue());
 		return v0 && v1;
 	}
 
@@ -54,8 +54,12 @@ public class LogicElementAnd extends LogicElement {
 		
 		return offset;
 	}
+
 	@Override
 	public String getElementName() {
 		return "And";
 	}
+
+	@Override
+	public int getTypeId() { return R.id.menu_button_and;}
 }

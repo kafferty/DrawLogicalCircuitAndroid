@@ -11,12 +11,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.os.Environment;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,7 +26,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
@@ -44,8 +45,7 @@ public class MainActivity extends Activity {
 	private int NUM_COLUMNS = 7;
 	private int countForExport = 0;
 	final String LOG_TAG = "myLogs";
-
-	// Инициализируем в  initializeParametersFromScreenSize()
+	public List<View> viewList = new ArrayList<View>();
 	public static int LOGIC_ELEMENT_HEIGHT;
 	public static int LOGIC_ELEMENT_WIDTH;
 	public static int LOGIC_ELEMENT_MARGIN_SIZE;
@@ -70,7 +70,6 @@ public class MainActivity extends Activity {
 	
 	private LogicElementInput[] inputElements;
 	private LogicElementOutput[] outputElements;
-
 	@Override	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -90,6 +89,7 @@ public class MainActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.action_restart:
 	    	this.recreate();
+			//btnLoad.setEnabled(true);
 	    	return true;
 			case R.id.action_about:
 				Intent intent = new Intent(MainActivity.this, About.class);
@@ -127,7 +127,13 @@ public class MainActivity extends Activity {
 		btnLoad.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Load();
+				for (int i =0; i<=4; i++) {
+					if (elementCreator.getAllLogicElements().size() == 0 && !inputElements[i].isInUse())
+						Load();
+					else
+						btnLoad.setEnabled(false);
+				}
+
 			}
 		});
 
@@ -154,8 +160,6 @@ public class MainActivity extends Activity {
 
 	}
 
-
-
 	private void Export() {
 		countForExport++;
 		View v1 = L1.getRootView();
@@ -177,59 +181,32 @@ public class MainActivity extends Activity {
 	}
 
 	private void Save() {
-		String filename = "myCircuit";
+
+		String filename = "myCircuit.txt";
 		countForExport++;
 
-
 		try {
-			// отрываем поток для записи
+			// Отрываем поток для записи
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
-					openFileOutput(filename + countForExport + "txt", MODE_PRIVATE)));
-			// пишем данные
-			for (int i = 0; i < elementCreator.getAllLogicElement().size(); i++) {
-				bw.write(elementCreator.getAllLogicElement().get(i).getElementName());
-				bw.write(" " + (int) elementCreator.getAllLogicElement().get(i).getX());
-				bw.write(" " + (int) elementCreator.getAllLogicElement().get(i).getY());
+					openFileOutput(filename, MODE_PRIVATE)));
+
+			// Пишем данные
+			for (LogicElement logicElement : elementCreator.getAllLogicElements()) {
+				bw.write(logicElement.elementToStringWithInputs());
+				System.out.println(logicElement.elementToStringWithInputs());
 				bw.write("\n");
 			}
-
-			//Сохранение координат тех проводов, которые пользователь нарисовал сам
-			if (elementCreator.realWireCoordinates.size() != 0) {
-				for (int i = 0; i < elementCreator.realWireCoordinates.size(); i++) {
-					bw.write("WIRE number " + (i+1) + " ");
-					bw.write(elementCreator.realWireCoordinates.get(i).get(0)[0] + " ");//Xbegin
-					bw.write(elementCreator.realWireCoordinates.get(i).get(1)[0] + " ");//Xend
-					bw.write(elementCreator.realWireCoordinates.get(i).get(0)[1] + " ");//Ybegin
-					bw.write(elementCreator.realWireCoordinates.get(i).get(1)[1] + " ");//Yend
+			for (LogicElementOutput logicElementOutput: outputElements) {
+				if (logicElementOutput.hasInput()) {
+					bw.write(logicElementOutput.elementToStringWithInputs());
 					bw.write("\n");
+					System.out.println(logicElementOutput.elementToStringWithInputs());
 				}
 			}
 
-			//Сохранение координат дорисованных проводов
-			if (elementCreator.wireCoordinates.size() !=0) {
-				for (int i = 0; i < elementCreator.wireCoordinates.size(); i++) {
-					bw.write("Для " + (i+1) + " провода");
-					if(elementCreator.wireCoordinates.get(i).get(2)[0][0] == 1) {
-						if (elementCreator.wireCoordinates.get(i).get(0) != null) {
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(0)[0][0]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(0)[0][1]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(0)[1][0]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(0)[1][1]);
-							bw.write("\n");
-						}
-						if (elementCreator.wireCoordinates.get(i).get(1) != null) {
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(1)[0][0]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(1)[0][1]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(1)[1][0]);
-							bw.write(" " + elementCreator.wireCoordinates.get(i).get(1)[1][1]);
-							bw.write("\n");
-						}
-					}
-				}
-			}
-			//закрываем поток
+			//Закрываем поток
 			bw.close();
-			Log.d(LOG_TAG, "Файл записан");
+			Log.d(LOG_TAG, "Файл записан " + countForExport + " раз");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -240,21 +217,34 @@ public class MainActivity extends Activity {
 	public void Load() {
 		try {
 			String filename = "myCircuit.txt";
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					openFileInput(filename)));
-			String str = "";
+			BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(filename)));
+
+			//Восстановим все сохраненные элементы
+			List<String> savedElements = new ArrayList<String>();
+
+			String str = null;
 			while ((str = br.readLine()) != null) {
 				Log.d(LOG_TAG, str);//Считывание из файла в логи для проверки правильности координат
-
-				//Проверка отрисовки проводов. Сейчас рисуется лишь последний нарисованный провод.
-				if (elementCreator.realWireCoordinates.size() != 0) {
-					for (int i = 0; i < elementCreator.realWireCoordinates.size(); i++) {
-						wireOverlay.startNewPathAt(elementCreator.realWireCoordinates.get(i).get(0)[0], elementCreator.realWireCoordinates.get(i).get(0)[1]);
-						wireOverlay.continuePathAlong(elementCreator.realWireCoordinates.get(i).get(1)[0], elementCreator.realWireCoordinates.get(i).get(1)[1] - elementCreator.LOGIC_ELEMENT_HEIGHT);
-					}
-				}
+				savedElements.add(str);
 			}
 
+			//Отрисуем все сохраненные элементы
+			for (String elementString : savedElements) {
+				elementCreator.loadElementFromString(elementString, this);
+			}
+
+			for (LogicElementInput logicElementInput: inputElements) {
+				for (LogicElement logicElement: elementCreator.getAllLogicElements())
+					if(logicElement.getElementName().equals("And") || logicElement.getElementName().equals("Or")) {
+						if (logicElement.getInputElements()[0] == logicElementInput || logicElement.getInputElements()[1] == logicElementInput)
+							logicElementInput.setInUse(true);
+					} else {
+						if (logicElement.getInputElements()[0] == logicElementInput)
+							logicElementInput.setInUse(true);
+					}
+			}
+
+			Log.d(LOG_TAG, "Элементы восстановлены из файла");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -315,14 +305,13 @@ public class MainActivity extends Activity {
 		// Добавляем входные элементы, исходные и выходные элементы.
 		// Добавляем onTouch listeners для каждого из этих элементов
 
-
 		LogicElement b = null;
 		GridLayout.LayoutParams p = null;
 		
 		inputElements = new LogicElementInput[NUM_ROWS];
 		outputElements = new LogicElementOutput[NUM_ROWS];
 
-		for (int i = 0; i < NUM_ROWS*NUM_COLUMNS; i++)
+		for (int i = 0; i < NUM_ROWS * NUM_COLUMNS; i++)
 		{
 			// Входные элементы слева, выходные справа и исходные в центре.
 			if (0 == i % NUM_COLUMNS)
@@ -352,7 +341,7 @@ public class MainActivity extends Activity {
 				public boolean onTouch(View arg0, MotionEvent arg1) {
 					return elementCreator.logicElementOnTouchHandler((LogicElement) arg0, arg1);
 				}});
-	        
+			viewList.add(b);
 	        mainGrid.addView(b);
 		}
 		

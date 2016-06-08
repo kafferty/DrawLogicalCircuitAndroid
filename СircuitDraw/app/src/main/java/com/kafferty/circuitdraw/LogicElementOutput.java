@@ -20,7 +20,8 @@ public class LogicElementOutput extends LogicElement {
 	public boolean hasLogicType() {
 		return true;
 	}
-	
+
+	public LogicElement[] getInput() { return inputElements; }
 	public boolean hasInput()
 	{
 		return (null == inputElements[0] ? false : true);
@@ -33,7 +34,8 @@ public class LogicElementOutput extends LogicElement {
 
 	@Override
 	public String getElementName() {
-		return null;
+		return "Output";
 	}
 
+	public int getTypeId() { return 100;}
 }

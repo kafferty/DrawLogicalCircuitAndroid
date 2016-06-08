@@ -54,4 +54,7 @@ public class LogicElementNot extends LogicElement {
 		return "Not";
 	}
 
+	@Override
+	public int getTypeId() { return R.id.menu_button_not;}
+
 }

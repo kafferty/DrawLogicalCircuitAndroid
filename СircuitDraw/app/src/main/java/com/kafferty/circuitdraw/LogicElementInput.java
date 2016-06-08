@@ -9,7 +9,6 @@ public class LogicElementInput extends LogicElement {
 
 	public LogicElementInput(Context context, AttributeSet attrs, int defStyle, int imageId) {
 		super(context, attrs, defStyle);
-		inputElements = null;
 		this.setImageResource(imageId);
 		logicValue = false;
 	}
@@ -44,8 +43,10 @@ public class LogicElementInput extends LogicElement {
 
 	@Override
 	public String getElementName() {
-		return null;
+		return "Input";
 	}
 
+	@Override
+	public int getTypeId() { return -100;}
 
 }

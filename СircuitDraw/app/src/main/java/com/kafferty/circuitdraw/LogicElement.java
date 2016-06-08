@@ -5,24 +5,51 @@ import android.util.AttributeSet;
 import android.widget.ImageButton;
 
 public abstract class LogicElement extends ImageButton {
-	
+
 	protected boolean hasLogicType;
+
 	protected LogicElement[] inputElements;
+
 	protected int[] coordinates;
-	
-	public abstract boolean getLogicValue();
-	public abstract boolean hasLogicType();
-	public abstract double[] getOffsetForGateLocation(GateLocation locationForWire);
-	public abstract String getElementName();
 
 	public LogicElement(Context context, AttributeSet attrs, int defStyle)
 	{
 		super(context,attrs,defStyle);
-		hasLogicType = false;
-		inputElements = null;
-		coordinates = null;
+		this.hasLogicType = false;
+		this.inputElements = null;
+		this.coordinates = null;
 	}
-	
+
+	public abstract int getTypeId() ;
+
+	public abstract boolean getLogicValue();
+	public abstract boolean hasLogicType();
+	public abstract double[] getOffsetForGateLocation(GateLocation locationForWire);
+
+	public abstract String getElementName();
+	public LogicElement[] getInputElements() {
+		return inputElements;
+	}
+	protected String elementToString() {
+		return getTypeId() + " " + getElementName() + " " + coordinates[0] + " " + coordinates[1];
+	}
+
+	public String elementToStringWithInputs () {//
+
+		//Запишем информацию о самом элементе
+		String result = this.elementToString();
+
+		if (inputElements.length > 0 && inputElements[0] != null) { //запишем информацию о первом входном элементе
+			result = result + " input1 " + inputElements[0].elementToString();
+		}
+
+		if (inputElements.length > 1 && inputElements[1] != null) { //запишем информацию о втором входном элементе
+			result = result + " input2 " + inputElements[1].elementToString();
+		}
+
+		return result;
+	}
+
 	public int[] getCoordinates() {
 		return coordinates;
 	}
@@ -30,11 +57,11 @@ public abstract class LogicElement extends ImageButton {
 	public void setCoordinates(int[] coordinates) {
 		this.coordinates = coordinates;
 	}
-	
+
 	public GateLocation addInput(LogicElement input, Quadrant quadrantTouched)
 	{
 		//Добавление входа и возвращение того, где он расположен
-		if (null == inputElements)
+		if (inputElements == null)
 		{
 			return GateLocation.NONE;
 		}
@@ -42,7 +69,7 @@ public abstract class LogicElement extends ImageButton {
 		return determineLocationOfWire(input, quadrantTouched);
 	}
 	
-	private GateLocation determineLocationOfWire(LogicElement input, Quadrant quadrantTouched)
+	protected GateLocation determineLocationOfWire(LogicElement input, Quadrant quadrantTouched)
 	{
 
 		//Используем QuadrantToucned для того, чтобы понять, где нужно нарисовать провод.
@@ -86,8 +113,6 @@ public abstract class LogicElement extends ImageButton {
 			default:
 				break;
 		}
-		
 		return locationToReturn;
 	}
-	
 }

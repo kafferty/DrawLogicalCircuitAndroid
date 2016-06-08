@@ -56,4 +56,7 @@ public class LogicElementOr extends LogicElement {
 		return "Or";
 	}
 
+	@Override
+	public int getTypeId() { return R.id.menu_button_or;}
+
 }
