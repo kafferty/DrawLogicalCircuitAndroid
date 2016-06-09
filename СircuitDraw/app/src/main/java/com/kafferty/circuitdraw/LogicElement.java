@@ -99,7 +99,7 @@ public abstract class LogicElement extends ImageButton {
 				}
 				else if (Quadrant.LEFT_BOTTOM == quadrantTouched || Quadrant.RIGHT_BOTTOM == quadrantTouched)
 				{
-					if (null == inputElements[1])
+					if (null == inputElements[0])
 					{
 						inputElements[0] = input;
 						locationToReturn = GateLocation.LEFT_UPPER;

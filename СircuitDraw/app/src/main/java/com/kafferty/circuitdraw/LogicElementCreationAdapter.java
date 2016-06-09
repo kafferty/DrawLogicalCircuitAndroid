@@ -12,6 +12,8 @@ import android.widget.GridLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class LogicElementCreationAdapter {
@@ -113,18 +115,35 @@ public class LogicElementCreationAdapter {
                         parent.addView(newElement, parent.indexOfChild(activity.viewList.get(i)));
                         parent.removeView(activity.viewList.get(i));
                         allLogicElements.add(newElement);
-                        if (elementProps.length == 14) {
+                        int[] coordinates = {elementCoordX, elementCoordY};
+                        newElement.setCoordinates(coordinates);
+                        if (elementProps.length == 14 && elementProps[11].equals("Input")) {
                             touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[12]), Integer.valueOf(elementProps[13]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
                             newElement.addInput(getLogicElementAtCoordinates(Integer.valueOf(elementProps[12]), Integer.valueOf(elementProps[13])), touchQuadrant);
                             wireOverlay.startNewPathAt(Integer.valueOf(elementProps[12]), Integer.valueOf(elementProps[13]));
                             wireOverlay.continuePathAlong(Integer.valueOf(elementProps[2]), Integer.valueOf(elementProps[3]));
                             wireOverlay.endPathAndDrawAt(true, null, null);
+                        } else if (elementProps.length == 14 && !elementProps[11].equals("Input")) {
+                            for (LogicElement logicElement : allLogicElements) {
+                                if (Integer.valueOf(elementProps[12]) == logicElement.getCoordinates()[0] && Integer.valueOf(elementProps[13]) == logicElement.getCoordinates()[1]) {
+                                    touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[12]), Integer.valueOf(elementProps[13]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
+                                    newElement.addInput(logicElement, touchQuadrant);
+                                }
+                            }
                         }
-                        touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
-                        newElement.addInput(getLogicElementAtCoordinates(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8])), touchQuadrant);
+                        if (elementProps[6].equals("Input")) {
+                            touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
+                            newElement.addInput(getLogicElementAtCoordinates(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8])), touchQuadrant);
+                        } else {
+                            for (LogicElement logicElement : allLogicElements) {
+                                if (Integer.valueOf(elementProps[7]) == logicElement.getCoordinates()[0] && Integer.valueOf(elementProps[8]) == logicElement.getCoordinates()[1]) {
+                                    touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
+                                    newElement.addInput(logicElement, touchQuadrant);
+                                }
+                            }
+                        }
                         String LOG_TAG = "MEOW";
-                        int[] coordinates = {elementCoordX, elementCoordY};
-                        newElement.setCoordinates(coordinates);
+
                         wireOverlay.startNewPathAt(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]));
                         wireOverlay.continuePathAlong(Integer.valueOf(elementProps[2]), Integer.valueOf(elementProps[3]));
                         wireOverlay.endPathAndDrawAt(true, null, null);
@@ -136,11 +155,16 @@ public class LogicElementCreationAdapter {
             int y = Integer.valueOf(elementProps[8]);
             int[] coord = {x, y};
             System.out.println(x + " " + y);
-
-            for (LogicElement logicElement: allLogicElements) {
-                if (coord[0] == logicElement.getCoordinates()[0] && coord[1] == logicElement.getCoordinates()[1]) {
-                    touchQuadrant = getQuadrantOfTouchEvent(x, y, elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
-                    getLogicElementAtCoordinates(elementCoordX, elementCoordY).addInput(logicElement, touchQuadrant);
+            if (elementProps[6].equals("Input")) {
+                touchQuadrant = getQuadrantOfTouchEvent(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]), elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
+                getLogicElementAtCoordinates(elementCoordX, elementCoordY).addInput(getLogicElementAtCoordinates(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8])), touchQuadrant);
+                System.out.println(getLogicElementAtCoordinates(elementCoordX, elementCoordY).elementToStringWithInputs() + " III");
+            } else {
+                for (LogicElement logicElement : allLogicElements) {
+                    if (coord[0] == logicElement.getCoordinates()[0] && coord[1] == logicElement.getCoordinates()[1]) {
+                        touchQuadrant = getQuadrantOfTouchEvent(x, y, elementCoordX, elementCoordY, MainActivity.LOGIC_ELEMENT_WIDTH, MainActivity.LOGIC_ELEMENT_HEIGHT);
+                        getLogicElementAtCoordinates(elementCoordX, elementCoordY).addInput(logicElement, touchQuadrant);
+                    }
                 }
             }
             wireOverlay.startNewPathAt(Integer.valueOf(elementProps[7]), Integer.valueOf(elementProps[8]));
@@ -221,6 +245,16 @@ public class LogicElementCreationAdapter {
             parent.addView(newElement, parent.indexOfChild(elementToUpdate));
             parent.removeView(elementToUpdate);
             allLogicElements.add(newElement);
+            Collections.sort(allLogicElements,
+                    new Comparator<LogicElement>() {
+                        public int compare(LogicElement o1, LogicElement o2) {
+                            if (o1.getCoordinates()[0] == o2.getCoordinates()[0])
+                                return 0;
+                            return (o1.getCoordinates()[0] > o2.getCoordinates()[0]) ? 1 : -1;
+                        }
+                    }
+            );
+
         }
 
         alertDialog.dismiss();
@@ -320,7 +354,6 @@ public class LogicElementCreationAdapter {
                             if (elementToUpdate instanceof LogicElementInput) {
                                 ((LogicElementInput) elementToUpdate).setInUse(true);
                             }
-
                             elementConnectionSuccess = true;
 
                         } while (false);

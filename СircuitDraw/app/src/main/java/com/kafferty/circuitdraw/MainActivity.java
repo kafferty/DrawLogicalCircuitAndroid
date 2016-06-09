@@ -89,7 +89,6 @@ public class MainActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.action_restart:
 	    	this.recreate();
-			//btnLoad.setEnabled(true);
 	    	return true;
 			case R.id.action_about:
 				Intent intent = new Intent(MainActivity.this, About.class);
@@ -124,17 +123,21 @@ public class MainActivity extends Activity {
 			}
 		});
 
+
 		btnLoad.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				for (int i =0; i<=4; i++) {
-					if (elementCreator.getAllLogicElements().size() == 0 && !inputElements[i].isInUse())
-						Load();
-					else
-						btnLoad.setEnabled(false);
+				int counter = 0;
+				for (int i = 0; i < 4; i++) {
+					if (!inputElements[i].isInUse())
+						counter++;
 				}
-
+				if (counter == 4 && elementCreator.getAllLogicElements().size() == 0)
+					Load();
+				else
+					btnLoad.setEnabled(false);
 			}
+
 		});
 
 		btnTable.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +245,12 @@ public class MainActivity extends Activity {
 						if (logicElement.getInputElements()[0] == logicElementInput)
 							logicElementInput.setInUse(true);
 					}
+			}
+			for (LogicElementOutput logicElementOutput: outputElements) {
+				for (LogicElementInput logicElementInput: inputElements) {
+					if (logicElementOutput.getInputElements()[0] == logicElementInput)
+						logicElementInput.setInUse(true);
+				}
 			}
 
 			Log.d(LOG_TAG, "Элементы восстановлены из файла");
